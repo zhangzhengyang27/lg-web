@@ -4,20 +4,20 @@
 
 // 2. 强类型代码更智能，编码更准确
 
-// function render (element) {
-//   element.className = 'container'
-//   element.innerHtml = 'hello world'
-// }
+function render (element) {
+  element.className = 'container'
+  element.innerHtml = 'hello world'
+}
 
 // =================================
 
 // 3. 重构更可靠
 
-// const util = {
-//   aaa: () => {
-//     console.log('util func')
-//   }
-// }
+const util = {
+  aaa: () => {
+    console.log('util func')
+  }
+}
 
 // =================================
 
