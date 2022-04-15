@@ -24,8 +24,9 @@ function p1 () {
 }
 function p2 () {
   return new MyPromise(function (resolve, reject) {
-    reject('失败')
-    // resolve('成功');  
+    // throw New Error('ececutor error')
+    // reject('失败')
+    resolve('成功');
   })
 }
 

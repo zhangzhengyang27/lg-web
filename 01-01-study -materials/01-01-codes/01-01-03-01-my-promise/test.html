@@ -15,6 +15,12 @@
       p1()
         .then(value => console.log(value))
         .catch(reason => console.log(reason))
+
+      // 发生promise的循环调用
+      var p2=promise.then(function (value){
+        console.log(value)
+        return p1;
+      })
     </script>
   </body>
 </html>

@@ -26,7 +26,7 @@ class MyPromise {
     if (this.status !== PENDING) return;
     // 将状态更改为成功
     this.status = FULFILLED;
-    // 保存成功之后的值
+    // 保存成功之后的值,要在then的方法中拿到
     this.value = value;
     // 判断成功回调是否存在 如果存在 调用
     // this.successCallback && this.successCallback(this.value);
@@ -49,8 +49,9 @@ class MyPromise {
     // 参数可选
     failCallback = failCallback ? failCallback: reason => { throw reason };
     let promsie2 = new MyPromise((resolve, reject) => {
-      // 判断状态
+      // 判断状态  成功状态
       if (this.status === FULFILLED) {
+        // 使用定时器就是为了resolvePromise可以获得promsie2
         setTimeout(() => {
           try {
             let x = successCallback(this.value);
@@ -77,11 +78,12 @@ class MyPromise {
           }
         }, 0)
       } else {
-        // 等待
+        // 等待  处理异步的代码
         // 将成功回调和失败回调存储起来
         this.successCallback.push(() => {
           setTimeout(() => {
             try {
+              // 拿上上一个promise返回的值
               let x = successCallback(this.value);
               // 判断 x 的值是普通值还是promise对象
               // 如果是普通值 直接调用resolve 
@@ -111,6 +113,7 @@ class MyPromise {
     });
     return promsie2;
   }
+  // 始终都会被执行
   finally (callback) {
     return this.then(value => {
       return MyPromise.resolve(callback()).then(() => value);
@@ -151,6 +154,7 @@ class MyPromise {
 }
 
 function resolvePromise (promsie2, x, resolve, reject) {
+  // 解决promise自己返回自己的情况
   if (promsie2 === x) {
     return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
   }
