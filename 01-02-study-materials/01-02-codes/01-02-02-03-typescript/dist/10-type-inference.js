@@ -6,5 +6,5 @@ var age = 18; // number
 var foo;
 foo = 100;
 foo = 'string';
-// 建议为每个变量添加明确的类型标准
+// 建议为每个变量添加明确的类型标注
 //# sourceMappingURL=10-type-inference.js.map

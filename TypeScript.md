@@ -309,17 +309,45 @@ passAny(100)
 
 ### 类型小结
 
+[flow官网](https://flow.org/en/docs/types/)
+
+[类型手册](https://www.saltycrane.com/cheat-sheets/flow-type/latest/)
+
 ### 运行环境API
 
 内置对象
 
+```js
+/**
+ * 运行环境 API
+ *
+ * @flow
+ */
+
+const element: HTMLElement | null = document.getElementById('app')
+```
+
 ## TypeScript
 
-JavaScript的超集(superset)，ts经过编译之后转换为js
+JavaScript的超集(superset)，ts经过编译之后转换为JS
+
+任何一种JS运行环境都支持、功能更为强大，生态也更健全、更完善
+
+缺点：
+
+语言本身多了很多的概念
 
 ![ts的包含种类](https://interview-aliyun.oss-cn-beijing.aliyuncs.com/img/ts%E7%9A%84%E5%8C%85%E5%90%AB%E7%A7%8D%E7%B1%BB.png)
 
 ### 快速上手
+
+```
+yarn init --yes
+add typescript --dev
+
+```
+
+
 
 ### 配置文件
 
