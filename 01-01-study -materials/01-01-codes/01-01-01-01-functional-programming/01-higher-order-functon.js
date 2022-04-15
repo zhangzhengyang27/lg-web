@@ -7,11 +7,11 @@ function forEach (array, fn) {
 }
 
 // 测试
-// let arr = [1, 3, 4, 7, 8]
+let arr1 = [1, 3, 4, 7, 8]
 
-// forEach(arr, function (item) {
-//   console.log(item)
-// })
+forEach(arr1, function (item) {
+  console.log(item)
+})
 
 
 // filter

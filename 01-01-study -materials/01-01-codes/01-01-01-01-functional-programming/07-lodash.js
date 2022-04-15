@@ -17,4 +17,3 @@ const r = _.each(array, (item, index) => {
 
 console.log(r)
 
-// _.find

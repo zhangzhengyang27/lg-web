@@ -17,6 +17,7 @@ function getArea (r) {
 function memoize (f) {
   let cache = {}
   return function () {
+    // arguments是一个伪数组
     let key = JSON.stringify(arguments)
     cache[key] = cache[key] || f.apply(f, arguments)
     return cache[key]

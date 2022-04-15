@@ -1,14 +1,14 @@
-console.log('global begin')
+console.log('global begin')
 
-function bar () {
-  console.log('bar task')
+function bar() {
+    console.log('bar task')
 }
 
-function foo () {
-  console.log('foo task')
-  bar()
+function foo() {
+    console.log('foo task')
+    bar()
 }
 
 foo()
 
-console.log('global end')
+console.log('global end')

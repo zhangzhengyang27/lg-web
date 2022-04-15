@@ -30,9 +30,9 @@ const every = (array, fn) => {
 
 
 // 测试
-// let arr = [9, 12, 14]
-// let r = every(arr, v => v > 10)
-// console.log(r)
+let arr = [9, 12, 14]
+let r = every(arr, v => v > 10)
+console.log(r)
 
 // some
 const some = (array, fn) => {

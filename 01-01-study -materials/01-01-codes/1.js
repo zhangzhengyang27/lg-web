@@ -6,7 +6,6 @@ setTimeout(function timer1() {
 
 setTimeout(function timer2() {
     console.log('timer2 invoke')
-
     setTimeout(function inner() {
         console.log('inner invoke')
     }, 1000)

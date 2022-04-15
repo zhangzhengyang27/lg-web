@@ -16,20 +16,6 @@ function ajax (url) {
   })
 }
 
-function co (generator) {
-  const g = generator()
-
-  function handleResult (result) {
-    if (result.done) return // 生成器函数结束
-    result.value.then(data => {
-      handleResult(g.next(data))
-    }, error => {
-      g.throw(error)
-    })
-  }
-
-  handleResult(g.next())
-}
 
 async function main () {
   try {
@@ -46,7 +32,6 @@ async function main () {
   }
 }
 
-// co(main)
 const promise = main()
 
 promise.then(() => {

@@ -17,6 +17,6 @@ const result = generator.next()
 console.log(result)
 
 
-// generator.next('bar')
+generator.next('bar')
 
-generator.throw(new Error('Generator error'))
+// generator.throw(new Error('Generator error'))

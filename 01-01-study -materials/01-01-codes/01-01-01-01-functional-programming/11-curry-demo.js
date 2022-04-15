@@ -17,8 +17,8 @@ const filter = _.curry(function (func, array) {
 
 const findSpace = filter(haveSpace)
 
-// console.log(haveSpace('helloworld'))
-// console.log(haveNumber('abc'))
+console.log(haveSpace('hello world'))
+console.log(haveNumber('25$'))
 
 
 
