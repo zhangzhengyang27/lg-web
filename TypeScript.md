@@ -341,59 +341,549 @@ JavaScript的超集(superset)，ts经过编译之后转换为JS
 
 ### 快速上手
 
-```
+```js
 yarn init --yes
 add typescript --dev
-
+// 编译文件
+yarn tsc 01-getting-started.ts  
 ```
 
+编译ts文件
 
+```js
+// 可以完全按照 JavaScript 标准语法编写代码
+const hello = (name: any) =>  {
+  console.log(`Hello, ${name}`)
+}
+
+hello('TypeScript')
+
+// 编译过后
+// 可以完全按照 JavaScript 标准语法编写代码
+var hello = function (name) {
+    console.log("Hello, " + name);
+};
+hello('TypeScript');
+```
 
 ### 配置文件
 
+```js
+// 初始化，添加tsconfig.json
+yarn tsc --init 
+
+// 运行tsc,编译整个项目
+yarn tsc
+
+// 以中文提示报错消息
+yarn tsc --locale Zh-CN
+```
+
 ### 原始类型
 
-### 标准库声明
+```js
+// 原始数据类型
 
-内置对象类型
+const a: string = 'foobar'
 
-### 中文错误消息
+const b: number = 100 // NaN Infinity
+
+const c: boolean = true // false
+
+// 在非严格模式（strictNullChecks）下，  tsconfig文件夹下面更改 "strict": true,    
+// string, number, boolean 都可以为空
+// const d: string = null
+// const d: number = null
+// const d: boolean = null
+
+const e: void = undefined
+
+const f: null = null
+
+const g: undefined = undefined
+
+// Symbol 是 ES2015 标准中定义的成员，
+// 使用它的前提是必须确保有对应的 ES2015 标准库引用
+// 也就是 tsconfig.json 中的 lib 选项必须包含 ES2015
+const h: symbol = Symbol()
+
+// Promise
+
+// const error: string = 100
+```
+
+标准库就是内置对象所对应的声明
 
 ### 作用域问题
 
-### Object类型
+```js
+// 默认文件中的成员会作为全局成员
+// 多个文件中有相同成员就会出现冲突
+// const a = 123
 
-### 数组类型
+// 解决办法1: IIFE 提供独立作用域
+// (function () {
+//   const a = 123
+// })()
 
-### 元组类型
+// 解决办法2: 在当前文件使用 export，也就是把当前文件变成一个模块
+// 模块有单独的作用域
+const a = 123
 
-### 枚举类型
+// export {}是导出的语法
+export {}
+```
 
-### 函数类型
+### 特殊类型
 
-### 任意类型
+```js
+// Object 类型
 
-### 隐式类型转换
+export {} // 确保跟其它示例没有成员冲突
 
-### 类型断言
+// object 类型是指除了原始类型以外的其它类型
+const foo: object = function () {} // [] // {}
 
-### 接口
+// 如果需要明确限制对象类型，则应该使用这种类型对象字面量的语法，或者是「接口」
+const obj: { foo: number, bar: string } = { foo: 123, bar: 'string' }
 
-### 可选成员、只读成员
+// 在ts中限制对象的类型，要用到接口，接口的概念后续介绍
+```
+
+```js
+// 数组类型
+
+export {} // 确保跟其它示例没有成员冲突
+
+// 数组类型的两种表示方式
+
+const arr1: Array<number> = [1, 2, 3]
+
+const arr2: number[] = [1, 2, 3]
+
+// 案例 -----------------------
+
+// 如果是 JS，需要判断是不是每个成员都是数字
+// 使用 TS，类型有保障，不用添加类型判断
+function sum (...args: number[]) {
+  return args.reduce((prev, current) => prev + current, 0)
+}
+
+sum(1, 2, 3) // => 6
+```
+
+```ts
+// 元组（Tuple） 就是明确元素数量和元素类型的
+
+export {} // 确保跟其它示例没有成员冲突
+
+const tuple: [number, string] = [18, 'zce']
+
+// 访问数据
+// const age = tuple[0]
+// const name = tuple[1]
+
+const [age, name] = tuple
+
+// ---------------------
+
+const entries: [string, number][] = Object.entries({
+  foo: 123,
+  bar: 456
+})
+
+const [key, value] = entries[0]
+// key => foo, value => 123
+```
+
+```js
+// 枚举（Enum）
+
+export {} // 确保跟其它示例没有成员冲突
+
+// 用对象模拟枚举
+const PostStatus1 = {
+  Draft: 0,
+  Unpublished: 1,
+  Published: 2
+}
+
+// 标准的数字枚举
+enum PostStatus2 {
+  Draft = 0,
+  Unpublished = 1,
+  Published = 2
+}
+
+// 数字枚举，枚举值自动基于前一个值自增
+enum PostStatus3 {
+  Draft = 6,
+  Unpublished, // => 7
+  Published // => 8
+}
+
+// 字符串枚举，需要手动初始化值
+enum PostStatus4 {
+  Draft = 'aaa',
+  Unpublished = 'bbb',
+  Published = 'ccc'
+}
+
+// 常量枚举，不会侵入编译结果；编译过后显示的是具体数字值
+const enum PostStatus {
+  Draft,
+  Unpublished,
+  Published
+}
+
+
+const post = {
+  title: 'Hello TypeScript',
+  content: 'TypeScript is a typed superset of JavaScript.',
+  status: PostStatus.Draft // 3 // 1 // 0
+}
+
+// PostStatus[0] // => Draft
+```
+
+```js
+// 函数类型
+
+export {} // 确保跟其它示例没有成员冲突
+
+function func1 (a: number, b: number = 10, ...rest: number[]): string {
+  return 'func1'
+}
+
+func1(100, 200)
+
+func1(100)
+
+func1(100, 200, 300)
+
+// -----------------------------------------
+
+const func2: (a: number, b: number) => string = function (a: number, b: number): string {
+  return 'func2'
+}
+```
+
+```js
+// 任意类型（弱类型）
+
+export {} // 确保跟其它示例没有成员冲突
+
+function stringify (value: any) {
+  return JSON.stringify(value)
+}
+
+stringify('string')
+
+stringify(100)
+
+stringify(true)
+
+let foo: any = 'string'
+
+foo = 100
+
+foo.bar()
+
+// any 类型是不安全的
+```
+
+```js
+// 隐式类型推断  会推断的类型为第一个赋值的类型
+
+export {} // 确保跟其它示例没有成员冲突
+
+let age = 18 // number
+
+// age = 'string'
+
+// 推断为any
+let foo
+
+foo = 100
+
+foo = 'string'
+
+// 建议为每个变量添加明确的类型标注
+```
+
+```js
+// 类型断言
+
+export {} // 确保跟其它示例没有成员冲突
+
+// 假定这个 nums 来自一个明确的接口
+const nums = [110, 120, 119, 112]
+
+const res = nums.find(i => i > 0)
+
+// const square = res * res
+
+const num1 = res as number
+
+const num2 = <number>res // JSX 下不能使用
+```
+
+```js
+// 接口
+
+export {} // 确保跟其它示例没有成员冲突
+
+interface Post {
+  title: string
+  content: string
+}
+
+function printPost (post: Post) {
+  console.log(post.title)
+  console.log(post.content)
+}
+
+printPost({
+  title: 'Hello TypeScript',
+  content: 'A javascript superset'
+})
+```
+
+```js
+// 可选成员、只读成员、动态成员
+
+export {} // 确保跟其它示例没有成员冲突
+
+// -------------------------------------------
+
+interface Post {
+  title: string
+  content: string
+  subtitle?: string
+  readonly summary: string
+}
+
+const hello: Post = {
+  title: 'Hello TypeScript',
+  content: 'A javascript superset',
+  summary: 'A javascript'
+}
+
+// hello.summary = 'other'
+
+// ----------------------------------
+
+interface Cache {
+  [prop: string]: string
+}
+
+const cache: Cache = {}
+
+cache.foo = 'value1'
+cache.bar = 'value2'
+```
 
 ### 类
 
-访问修饰符
+```js
+// 类（Class）
 
-只读属性
+export {} // 确保跟其它示例没有成员冲突
 
-类与接口
+class Person {
+  name: string // = 'init name'
+  age: number
+  
+  constructor (name: string, age: number) {
+    this.name = name
+    this.age = age
+  }
 
-抽象类
+  sayHi (msg: string): void {
+    console.log(`I am ${this.name}, ${msg}`)
+  }
+}
+```
+
+#### 访问修饰符
+
+```ts
+// 类的访问修饰符
+
+export {} // 确保跟其它示例没有成员冲突
+
+class Person {
+  public name: string // = 'init name'
+  private age: number
+  protected gender: boolean
+  
+  constructor (name: string, age: number) {
+    this.name = name
+    this.age = age
+    this.gender = true
+  }
+
+  sayHi (msg: string): void {
+    console.log(`I am ${this.name}, ${msg}`)
+    console.log(this.age)
+  }
+}
+
+class Student extends Person {
+  private constructor (name: string, age: number) {
+    super(name, age)
+    console.log(this.gender)
+  }
+
+  static create (name: string, age: number) {
+    return new Student(name, age)
+  }
+}
+
+const tom = new Person('tom', 18)
+console.log(tom.name)
+// console.log(tom.age)
+// console.log(tom.gender)
+
+const jack = Student.create('jack', 18)
+```
+
+#### 只读属性
+
+```ts
+// 类的只读属性
+
+export {} // 确保跟其它示例没有成员冲突
+
+class Person {
+  public name: string // = 'init name'
+  private age: number
+  // 只读成员
+  protected readonly gender: boolean
+  
+  constructor (name: string, age: number) {
+    this.name = name
+    this.age = age
+    this.gender = true
+  }
+
+  sayHi (msg: string): void {
+    console.log(`I am ${this.name}, ${msg}`)
+    console.log(this.age)
+  }
+}
+
+const tom = new Person('tom', 18)
+console.log(tom.name)
+// tom.gender = false
+```
+
+#### 类与接口
+
+```ts
+// 类与接口
+
+export {} // 确保跟其它示例没有成员冲突
+
+interface Eat {
+  eat (food: string): void
+}
+
+interface Run {
+  run (distance: number): void
+}
+
+class Person implements Eat, Run {
+  eat (food: string): void {
+    console.log(`优雅的进餐: ${food}`)
+  }
+
+  run (distance: number) {
+    console.log(`直立行走: ${distance}`)
+  }
+}
+
+class Animal implements Eat, Run {
+  eat (food: string): void {
+    console.log(`呼噜呼噜的吃: ${food}`)
+  }
+
+  run (distance: number) {
+    console.log(`爬行: ${distance}`)
+  }
+}
+```
+
+#### 抽象类
+
+```js
+// 抽线类
+
+export {} // 确保跟其它示例没有成员冲突
+
+abstract class Animal {
+  eat (food: string): void {
+    console.log(`呼噜呼噜的吃: ${food}`)
+  }
+
+  abstract run (distance: number): void
+}
+
+class Dog extends Animal {
+  run(distance: number): void {
+    console.log('四脚爬行', distance)
+  }
+}
+
+const d = new Dog()
+d.eat('嗯西马')
+d.run(100)
+```
 
 ### 泛型
 
+```ts
+// 泛型
+
+export {} // 确保跟其它示例没有成员冲突
+
+function createNumberArray (length: number, value: number): number[] {
+  const arr = Array<number>(length).fill(value)
+  return arr
+}
+
+function createStringArray (length: number, value: string): string[] {
+  const arr = Array<string>(length).fill(value)
+  return arr
+}
+
+function createArray<T> (length: number, value: T): T[] {
+  const arr = Array<T>(length).fill(value)
+  return arr
+}
+
+// const res = createNumberArray(3, 100)
+// res => [100, 100, 100]
+
+const res = createArray<string>(3, 'foo')
+```
+
 ### 类型声明
 
+```ts
+// 类型声明
+// @types/lodash  lodash类型声明包
 
+import { camelCase } from 'lodash'
+import qs from 'query-string'
+
+qs.parse('?key=value&key2=value2')
+
+// declare function camelCase (input: string): string
+
+const res = camelCase('hello typed')
+
+
+export {} // 确保跟其它示例没有成员冲突
+```
 
