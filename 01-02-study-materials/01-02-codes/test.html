@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>循环添加事件</title>
+</head>
+<body>
+<button index="1">按钮1</button>
+<button index="2">按钮2</button>
+<button index="3">按钮3</button>
+</body>
+<script>
+    var aButtons = document.querySelectorAll('button')
+    console.log(aButtons)
+    // 基础
+    // for (var i = 0; i < aButtons.length; i++) {
+    //     aButtons[i].onclick = function () {
+    //         console.log(i)
+    //     }
+    // }
+    /*
+    * 闭包
+    * 自定义事件
+    * 事件委托
+    * */
+    // for (var i = 0; i < aButtons.length; i++) {
+    //     (function (i) {
+    //         aButtons[i].onclick = function () {
+    //             console.log(i)
+    //         }
+    //     })(i)
+    // }
+
+    /*
+    for (var i = 0; i < aButtons.length; i++) {
+        aButtons[i].onclick = (function (i) {
+            return function () {
+                console.log(i)
+            }
+        })(i)
+    }
+    */
+
+
+    // for (let i = 0; i < aButtons.length; i++) {
+    //     aButtons[i].onclick = function () {
+    //         console.log(i)
+    //     }
+    // }
+
+
+    // 添加自定义事件
+    // for (var i = 0; i < aButtons.length; i++) {
+    //     aButtons[i].myIndex = i
+    //     aButtons[i].onclick = function () {
+    //         console.log(this.myIndex)
+    //     }
+    // }
+
+    //  事件委托
+    document.body.onclick = function (ev) {
+        var target = ev.target, targetDom = target.tagName
+        if (targetDom === 'BUTTON') {
+            var index = target.getAttribute('index')
+            console.log(index)
+        }
+
+    }
+
+</script>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>堆快照监控内存</title>
+</head>
+<body>
+<button id="btn">Add</button>
+</body>
+<script>
+    let temple
+
+    function test() {
+        var ul=document.createElement('ul')
+        for (let i = 0; i < 100000; i++) {
+            ul.appendChild(document.createElement('p'))
+        }
+        temple=ul
+    }
+
+    document.getElementById('btn').addEventListener('click', test)
+</script>
+</html>
