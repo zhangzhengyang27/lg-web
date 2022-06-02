@@ -1,1 +1,10 @@
-{"version":3,"sourceRoot":"","sources":["../scss/main.scss"],"names":[],"mappings":"AAGA;EACE;EACA;EACA;EACA,kBAPQ;EAQR,OAPW","file":"style.css"}
+{
+  "version": 3,
+  "sourceRoot": "",
+  "sources": [
+    "../scss/main.scss"
+  ],
+  "names": [],
+  "mappings": "AAGA;EACE;EACA;EACA;EACA,kBAPQ;EAQR,OAPW",
+  "file": "style.css"
+}

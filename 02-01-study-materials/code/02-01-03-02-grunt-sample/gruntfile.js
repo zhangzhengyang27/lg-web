@@ -5,6 +5,7 @@
 // grunt 对象中提供一些创建任务时会用到的 API
 
 module.exports = grunt => {
+  // 第二个参数是描述信息
   grunt.registerTask('foo', 'a sample task', () => {
     console.log('hello grunt')
   })

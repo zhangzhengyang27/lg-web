@@ -7,6 +7,9 @@ const loadPlugins = require('gulp-load-plugins')
 
 const plugins = loadPlugins()
 const bs = browserSync.create()
+const sass = require('gulp-sass')(require('sass'))
+
+// 命令行所在的工作目录
 const cwd = process.cwd()
 let config = {
   // default config
@@ -36,7 +39,7 @@ const clean = () => {
 
 const style = () => {
   return src(config.build.paths.styles, { base: config.build.src, cwd: config.build.src })
-    .pipe(plugins.sass({ outputStyle: 'expanded' }))
+    .pipe(sass({ outputStyle: 'expanded' }))
     .pipe(dest(config.build.temp))
     .pipe(bs.reload({ stream: true }))
 }
@@ -117,7 +120,7 @@ const useref = () => {
 const compile = parallel(style, script, page)
 
 // 上线之前执行的任务
-const build =  series(
+const build = series(
   clean,
   parallel(
     series(compile, useref),

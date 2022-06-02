@@ -1,7 +1,7 @@
 module.exports = {
   build: {
     src: 'src',
-    dist: 'release',
+    dist: 'dist',
     temp: '.tmp',
     public: 'public',
     paths: {

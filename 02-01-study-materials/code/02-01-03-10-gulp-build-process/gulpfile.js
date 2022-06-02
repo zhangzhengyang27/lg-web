@@ -13,7 +13,9 @@ exports.default = () => {
     // 核心转换过程
     transform: (chunk, encoding, callback) => {
       const input = chunk.toString()
+      // 空白字符 替换代码当中的css注释
       const output = input.replace(/\s+/g, '').replace(/\/\*.+?\*\//g, '')
+      // callback 函数式错误优先的对象，没有错误就传递一个Null
       callback(null, output)
     }
   })
