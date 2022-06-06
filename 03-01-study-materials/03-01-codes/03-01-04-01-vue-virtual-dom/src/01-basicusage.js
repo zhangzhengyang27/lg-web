@@ -16,10 +16,12 @@ let vnode = h('div#container.cls',{
   }
 }, 'Hello World')
 let app = document.querySelector('#app')
-// 第一个参数：旧的 VNode，可以是 DOM 元素
+
+// 第一个参数：旧的 VNode，可以是 DOM 元素（会把真实DOM转换为vnode）
 // 第二个参数：新的 VNode
 // 返回新的 VNode
 let oldVnode = patch(app, vnode)
 
+// 替换之前的vnode
 vnode = h('div#container.xxx', 'Hello Snabbdom')
 patch(oldVnode, vnode)

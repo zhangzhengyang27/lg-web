@@ -13,7 +13,10 @@ const patch = init([
 
 // 3. 使用h() 函数的第二个参数传入模块中使用的数据（对象）
 let vnode = h('div', [
-  h('h1', { style: { backgroundColor: 'red' } }, 'Hello World'),
+  h('h1', {
+    style: { backgroundColor: 'red' },
+    on: { click: eventHandler }
+  }, 'Hello World'),
   h('p', { on: { click: eventHandler } }, 'Hello P')
 ])
 

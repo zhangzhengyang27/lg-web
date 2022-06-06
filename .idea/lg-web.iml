@@ -5,6 +5,9 @@
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/02-01-study-materials/code/02-01-03-06-grunt-plugins/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/02-01-study-materials/code/02-01-03-13-zce-gulp-extract/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/03-01-study-materials/03-01-codes/snabbdom-2.1.0/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
